@@ -1,0 +1,1 @@
+Start-Process py -ArgumentList "-3.12", "settings.py" -WindowStyle Hidden 

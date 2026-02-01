@@ -1,0 +1,34 @@
+{
+    "clock_on": 0,
+    "text_on": 0,
+    "photo_on": 0,
+    "media_on": 0,
+    "todo_on": 0,
+    "button_on": 0,
+
+    "clock_time": "#d6d6d6",
+    "clock_date": "#d6d6d6",
+    "clock_bg": "#242424",
+    "clock_xy": [0,0],
+
+    "text_text": "#d6d6d6",
+    "text_bg": "#242424",
+    "text_c": "Example text",
+    "text_xy": [0,0],
+
+    "button_text": "#d6d6d6",
+    "button_bg": "#242424",
+    "button_c": "notepad.exe",
+    "button_xy": [0,0],
+
+    "media_text_t": "#d6d6d6",
+    "media_text_a": "#d6d6d6",
+    "media_bg": "#242424",
+    "media_xy": [0,0],
+
+    "todo_text": "#d6d6d6",
+    "todo_bg": "#242424",
+    "todo_xy": [0,0],
+
+    "photo_xy": [0,0]
+}
