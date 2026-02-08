@@ -179,27 +179,32 @@ class MediaWidget(tk.Tk):
         self.shift_held = state
 
     def start_drag(self, event):
-        if self.shift_held and self.is_resize_zone(event):
+        w, h = self.winfo_width(), self.winfo_height()
+
+        if self.shift_held and w - 15 <= event.x_root - self.winfo_rootx() <= w \
+        and h - 15 <= event.y_root - self.winfo_rooty() <= h:
             self.resizing = True
-            self.start_width = self.winfo_width()
-            self.start_height = self.winfo_height()
+            self.start_width = w
+            self.start_height = h
             self.drag_x = event.x_root
             self.drag_y = event.y_root
         elif self.alt_held:
-            self.drag_x = event.x
-            self.drag_y = event.y
+            self.drag_x = event.x_root
+            self.drag_y = event.y_root
 
     def do_drag(self, event):
         if self.alt_held and not self.resizing:
-            x = self.winfo_x() + event.x - self.drag_x
-            y = self.winfo_y() + event.y - self.drag_y
+            x = self.winfo_x() + (event.x_root - self.drag_x)
+            y = self.winfo_y() + (event.y_root - self.drag_y)
             self.geometry(f"+{x}+{y}")
+            self.drag_x = event.x_root
+            self.drag_y = event.y_root
         elif self.resizing:
             dx = event.x_root - self.drag_x
             dy = event.y_root - self.drag_y
-            w = max(100, self.start_width + dx)
-            h = max(50, self.start_height + dy)
-            self.geometry(f"{w}x{h}")
+            self.geometry(
+                f"{max(100, self.start_width + dx)}x{max(50, self.start_height + dy)}"
+            )
 
     def stop_drag(self, event):
         self.drag_x = self.drag_y = 0
@@ -211,7 +216,11 @@ class MediaWidget(tk.Tk):
         return w - 15 <= event.x <= w and h - 15 <= event.y <= h
 
     def check_resize_area(self, event):
-        if self.shift_held and self.is_resize_zone(event):
+        x = event.x_root - self.winfo_rootx()
+        y = event.y_root - self.winfo_rooty()
+        w, h = self.winfo_width(), self.winfo_height()
+
+        if self.shift_held and w - 15 <= x <= w and h - 15 <= y <= h:
             self.config(cursor="size_nw_se")
         else:
             self.config(cursor="")

@@ -125,14 +125,17 @@ class ClockWidget(tk.Tk):
         self.shift_held = state
 
     def start_drag(self, event):
-        if self.alt_held:
-            self.drag_x = event.x
-            self.drag_y = event.y
-        elif self.resizing:
-            self.start_width = self.winfo_width()
-            self.start_height = self.winfo_height()
+        w, h = self.winfo_width(), self.winfo_height()
+
+        if self.shift_held and w - 15 <= event.x <= w and h - 15 <= event.y <= h:
+            self.resizing = True
+            self.start_width = w
+            self.start_height = h
             self.drag_x = event.x_root
             self.drag_y = event.y_root
+        elif self.alt_held:
+            self.drag_x = event.x
+            self.drag_y = event.y
 
     def do_drag(self, event):
         if self.alt_held:
